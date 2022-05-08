@@ -5,15 +5,15 @@ import kotlinx.coroutines.*
 
 val View.viewScope: CoroutineScope
     get() {
-        val storedScope = getTag(R.string.viewCoroutineScope) as? CoroutineScope
-        if (storedScope != null) return storedScope
-
-        return ViewCoroutineScope().apply {
+        (getTag(R.string.viewCoroutineScopeTagKey) as? CoroutineScope)?.let { storedScope ->
+            return storedScope
+        }
+        return ViewCoroutineScope().also { newScope ->
             if (!isAttachedToWindow) {
-                cancel()
+                newScope.cancel()
             } else {
-                addOnAttachStateChangeListener(this)
-                setTag(R.string.viewCoroutineScope, this)
+                addOnAttachStateChangeListener(newScope)
+                setTag(R.string.viewCoroutineScopeTagKey, newScope)
             }
         }
     }

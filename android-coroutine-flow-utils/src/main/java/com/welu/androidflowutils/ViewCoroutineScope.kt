@@ -15,7 +15,7 @@ class ViewCoroutineScope: CoroutineScope, View.OnAttachStateChangeListener {
 
     override fun onViewDetachedFromWindow(p0: View?) {
         coroutineContext.cancel()
-        p0?.setTag(R.string.viewCoroutineScope, null)
+        p0?.setTag(R.string.viewCoroutineScopeTagKey, null)
     }
 
 }
