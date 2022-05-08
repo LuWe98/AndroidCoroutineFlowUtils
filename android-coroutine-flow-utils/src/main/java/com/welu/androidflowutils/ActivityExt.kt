@@ -24,7 +24,9 @@ inline fun AppCompatActivity.launch(
     startDelay: Long = 0,
     crossinline block: suspend CoroutineScope.() -> Unit
 ) = scope.launch(dispatcher) {
-    delay(startDelay)
+    if(startDelay > 0){
+        delay(startDelay)
+    }
     block.invoke(this)
 }
 
@@ -44,7 +46,9 @@ inline fun AppCompatActivity.launchWhen(
     crossinline block: suspend CoroutineScope.() -> Unit
 ) = scope.launch(context = dispatcher) {
     lifecycle.repeatOnLifecycle(livecycleState) {
-        delay(startDelay)
+        if(startDelay > 0){
+            delay(startDelay)
+        }
         block.invoke(this)
     }
 }
