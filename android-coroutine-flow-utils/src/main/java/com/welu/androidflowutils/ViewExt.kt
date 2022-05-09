@@ -5,7 +5,7 @@ import kotlinx.coroutines.*
 
 val View.viewScope: CoroutineScope
     get() {
-        (getTag(R.string.viewCoroutineScopeTagKey) as? CoroutineScope)?.let { storedScope ->
+        (getTag(R.id.viewCoroutineScopeTagKey) as? CoroutineScope)?.let { storedScope ->
             return storedScope
         }
         return ViewCoroutineScope().also { newScope ->
@@ -13,7 +13,7 @@ val View.viewScope: CoroutineScope
                 newScope.cancel()
             } else {
                 addOnAttachStateChangeListener(newScope)
-                setTag(R.string.viewCoroutineScopeTagKey, newScope)
+                setTag(R.id.viewCoroutineScopeTagKey, newScope)
             }
         }
     }
